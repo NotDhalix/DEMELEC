@@ -51,6 +51,26 @@ body {
     padding: 20px 45px 20px 20px;
 }
 
+.input-box label{
+    color: #DDD;
+    margin-left: 20px;
+    font-size: 13px;
+}
+
+.input-box input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    padding: 10px 40px 10px 20px;
+    border: 2px solid rgba(255, 255, 255, .2);
+    background: transparent;
+    color: #FFF;
+    border-radius: 40px;
+    font-size: 16px;
+}
+
+
 .input-box input::placeholder{
     color: #FFF;
 }

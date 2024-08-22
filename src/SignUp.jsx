@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import 'boxicons'
-
+import './LogIn.css';
 
 
 function SignUp (){
@@ -20,26 +20,30 @@ return(
 
           <div className="input-box">
             <input type="text" placeholder='Apellido' required />
-            <box-icon type='solid' name='user' color="white"></box-icon>
+            <box-icon name='user' color="white"></box-icon>
           </div>
 
           <div className="input-box">
-            <input type="date" placeholder='Fecha de nacimiento' required />
+            <input type="text" placeholder='DD/MM/AAA' required />
+            <box-icon name='calendar' color='white'></box-icon>
+            <label>Fecha de nacimiento</label>
           </div>
 
           <div className="input-box">
-            <input type="text" placeholder='Cédula' required />
+            <input type="text" placeholder='8-888-888' required />
             <box-icon type='solid' name='id-card' color="white"></box-icon>
+            <label>Cédula</label>
           </div>
 
           <div className="input-box">
-            <input type="text" placeholder='Correo electrónico' required />
-            <box-icon name='envelope' color="white"></box-icon>
+            <input type="text" placeholder='example@enterprise.com' required />
+            <box-icon name='envelope'type='solid' color="white"></box-icon>
+            <label>Correo electrónico</label>
           </div>
 
           <div className="input-box">
             <input type="text" placeholder='Repita su correo electrónico' required />
-            <box-icon name='envelope' type='solid' color="white"></box-icon>
+            <box-icon name='envelope' color="white"></box-icon>
           </div>
 
           <div className="input-box">
@@ -49,7 +53,7 @@ return(
 
           <div className="input-box">
             <input type="password" placeholder='Repita su contraseña' required />
-            <box-icon name='lock-alt' type='solid' color="white"></box-icon>
+            <box-icon name='lock-alt' color="white"></box-icon>
           </div>
 
 
