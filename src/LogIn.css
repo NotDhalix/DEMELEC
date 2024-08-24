@@ -7,12 +7,25 @@
     font-family: 'Poppins', sans-serif;
 }
 
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100.6%;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: -1; 
+    min-height: 100vh;
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;  
-    background: url(https://martos.es/wp-content/uploads/2023/11/fondo-cabecera-3-scaled.jpg) no-repeat;
+    background: url(https://www.murfreesborotn.gov/ImageRepository/Document?documentID=14095) no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -56,20 +69,6 @@ body {
     margin-left: 20px;
     font-size: 13px;
 }
-
-.input-box input[type="date"] {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    position: relative;
-    padding: 10px 40px 10px 20px;
-    border: 2px solid rgba(255, 255, 255, .2);
-    background: transparent;
-    color: #FFF;
-    border-radius: 40px;
-    font-size: 16px;
-}
-
 
 .input-box input::placeholder{
     color: #FFF;
@@ -133,4 +132,13 @@ body {
 }
 .register-link p a:hover{
     text-decoration: underline;
+}
+
+
+
+@media only screen and (max-width: 768px) {
+    .wrapper {
+        border: none;
+    }
+
 }
