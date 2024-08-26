@@ -12,7 +12,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;  
-    background: url(https://www.murfreesborotn.gov/ImageRepository/Document?documentID=14095) no-repeat;
+    background: url(./assets/background-img.jpeg) no-repeat;
     background-size: cover;
     background-position: center;
     overflow-x: hidden; 
@@ -139,66 +139,57 @@ body::before {
 }
 
 /*Darshboard.jsx CSS*/
+
+.dashboard{
+    display: grid;
+}
+
 .bar-plot{
-    position: absolute;
     top: 60px;
     left: 20px;
     margin: 0;
     padding: 0;
     width: auto;
 }
+/*PreliminarWinner.jsx*/
 
-.navbar {
-    display: block;
-    width: 100%;
-    background-color: #333;
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding: 10px 20px;
-    box-sizing: border-box; 
-    z-index: 1000; 
-    height: 60px;
-}
-
-.nav-button {
+.preliminar-winner-card {
+    position: absolute;
+    top: 60px;
+    right: 200px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    background: none;
-    border: none;
-    color: #FFF;
-    cursor: pointer;
-    width: 100%;
-    max-width: 1200px;
-    text-align: center;
-    margin: 0 auto;
-    padding: 10px;
+    background-color: #fff; /* Fondo blanco para la tarjeta */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar efecto de elevación */
+    max-width: 300px; /* Ancho máximo de la tarjeta */
+    margin: 20px auto; /* Centrado horizontal */
 }
 
-.nav-text {
-    flex: 1;
+.preliminar-winner-lable {
     font-size: 18px;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.user-name {
-    font-size: 16px;
-}
-
-.user-photo {
-    width: 40px;
+    font-weight: bold;
+    color: #000; /* Color de texto */
+    margin-bottom: 10px; /* Espaciado debajo de la etiqueta */
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
     height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #FFF;
 }
 
+.preliminar-winner-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra el contenedor */
+    margin-bottom: 10px; /* Espaciado debajo de la imagen */
+}
+
+.preliminar-winner-name {
+    font-size: 16px;
+    color: #555; /* Color de texto */
+    text-align: center;
+    font-weight: 500;
+}
 
 @media only screen and (max-width: 768px) {
     .wrapper {
@@ -207,5 +198,14 @@ body::before {
 
     body {
         background-size: 150vh;
+    }
+
+    .bar-plot{
+        position: absolute;
+        top: 100px;
+        left: 10px;
+        margin: 0;
+        padding: 0;
+        width: auto;
     }
 }
