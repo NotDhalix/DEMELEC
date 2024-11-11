@@ -54,7 +54,7 @@ function LogIn() {
           localStorage.setItem('user', JSON.stringify(data.user)); // Guardar la información del usuario
         }
 
-        navigate('/main'); // Cambiar '/main' por la ruta que quieras después de un login exitoso
+        navigate('/dashboard');
       } else {
         // Si la respuesta no es exitosa, mostrar un mensaje de error
         alert(data.error || 'Hubo un problema al iniciar sesión.');
