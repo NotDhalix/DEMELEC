@@ -2,9 +2,17 @@ import React, { useState } from 'react';
 
 function ResetPassword() {
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!email) {
+      alert('Por favor ingrese un correo electrónico.');
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const response = await fetch('/api/restablecer-password', {
@@ -16,14 +24,17 @@ function ResetPassword() {
       });
 
       const data = await response.json();
-      if (data.success) {
+
+      if (response.ok && data.success) {
         alert('Se ha enviado un enlace de restablecimiento a tu correo');
       } else {
-        alert('Hubo un problema al enviar el correo');
+        alert(data.error || 'Hubo un problema al enviar el correo');
       }
     } catch (error) {
       console.error('Error al restablecer la contraseña:', error);
       alert('Hubo un error, por favor intenta de nuevo más tarde');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -42,8 +53,8 @@ function ResetPassword() {
           />
         </div>
 
-        <button type="submit" className="btn">
-          Enviar enlace de restablecimiento
+        <button type="submit" className="btn" disabled={loading}>
+          {loading ? 'Enviando...' : 'Enviar enlace de restablecimiento'}
         </button>
       </form>
     </div>

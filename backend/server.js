@@ -1,32 +1,30 @@
-import express from 'express';
 import mysql from 'mysql2/promise';
 import cors from 'cors';
+import express from 'express';
 const app = express();
+
 app.use(cors());
 app.use(express.json()); // Para manejar JSON en las solicitudes
 
-// Función para establecer la conexión con la base de datos
+// Inicializamos la conexión con la base de datos
+let db;
 async function initializeDatabase() {
   try {
-    const db = await mysql.createConnection({
+    db = await mysql.createConnection({
       host: 'localhost',
       user: 'root',
       password: '',
       database: 'demelec',
     });
     console.log('Conectado a la base de datos MySQL');
-    return db;
   } catch (error) {
     console.error('Error al conectar a la base de datos:', error);
     process.exit(1); // Termina el proceso si falla la conexión a la base de datos
   }
 }
 
-// Inicializar base de datos
-let db;
-initializeDatabase().then((connection) => {
-  db = connection;
-});
+// Llamamos la inicialización de la base de datos
+initializeDatabase();
 
 // Endpoint para registro de usuario
 app.post('/api/signup', async (req, res) => {
