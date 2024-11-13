@@ -7,26 +7,23 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Verificar el estado de autenticación y usuario guardado en localStorage cuando la aplicación se carga
+    // Check for stored authentication status and user data on app load
     const storedAuth = localStorage.getItem('isAuthenticated');
     const storedUser = localStorage.getItem('user');
 
-    if (storedAuth === 'true') {
-      setIsAuthenticated(true);
-
-      if (storedUser) {
-        try {
-          const parsedUser = JSON.parse(storedUser);
-          setUser(parsedUser);
-        } catch (error) {
-          console.error('Error al parsear el usuario:', error);
-          localStorage.removeItem('user'); // Eliminar usuario si hay error de parsing
-        }
+    if (storedAuth === 'true' && storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setIsAuthenticated(true);
+        setUser(parsedUser);
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        localStorage.removeItem('user'); // Clear invalid user data
       }
     }
   }, []);
 
-  // Lógica de login
+  // Login logic
   const login = async (userData) => {
     try {
       const response = await fetch('http://127.0.0.1:3001/api/login', {
@@ -40,30 +37,29 @@ export const AuthProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        // Si el login es exitoso, actualizamos el estado
         setIsAuthenticated(true);
         setUser(data.user);
 
-        // Guardamos el estado en localStorage
+        // Save state in localStorage
         localStorage.setItem('isAuthenticated', 'true');
         localStorage.setItem('user', JSON.stringify(data.user));
-        
+
         return { status: 200, message: data.message, user: data.user };
       } else {
-        return { status: response.status, error: data.error || 'Error al iniciar sesión' };
+        return { status: response.status, error: data.error || 'Failed to login.' };
       }
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
-      return { status: 500, error: 'Hubo un error al intentar iniciar sesión.' };
+      console.error('Login error:', error);
+      return { status: 500, error: 'An error occurred while trying to log in.' };
     }
   };
 
-  // Lógica de logout
+  // Logout logic
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
 
-    // Limpiar el almacenamiento local
+    // Clear localStorage
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('user');
   };
@@ -75,7 +71,7 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Hook personalizado para usar el contexto de autenticación
+// Custom hook to use the authentication context
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {

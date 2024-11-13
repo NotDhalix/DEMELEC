@@ -1,34 +1,40 @@
-import React, { useState } from 'react';
+import './index.css';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 function ResetPassword() {
-  const [email, setEmail] = useState('');
+  const [cedula, setCedula] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!email) {
-      alert('Por favor ingrese un correo electrónico.');
+    if (!cedula) {
+      alert('Por favor ingrese su cédula.');
       return;
     }
 
     setLoading(true);
 
     try {
-      const response = await fetch('/api/restablecer-password', {
+      const response = await fetch('http://localhost:3001/api/restablecer-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ cedula }),
       });
 
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        alert('Se ha enviado un enlace de restablecimiento a tu correo');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          alert('Se ha enviado un enlace de restablecimiento a tu correo');
+        } else {
+          alert(data.error || 'Hubo un problema al enviar el correo');
+        }
       } else {
-        alert(data.error || 'Hubo un problema al enviar el correo');
+        const errorData = await response.json();
+        alert(errorData.error || 'Hubo un error inesperado');
       }
     } catch (error) {
       console.error('Error al restablecer la contraseña:', error);
@@ -45,10 +51,10 @@ function ResetPassword() {
 
         <div className="input-box">
           <input
-            type="email"
-            placeholder="Correo electrónico"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            placeholder="Ingrese su Cédula"
+            value={cedula}
+            onChange={(e) => setCedula(e.target.value)}
             required
           />
         </div>
@@ -56,6 +62,10 @@ function ResetPassword() {
         <button type="submit" className="btn" disabled={loading}>
           {loading ? 'Enviando...' : 'Enviar enlace de restablecimiento'}
         </button>
+
+        <div className="register-link">
+          <p>¿Ya tiene una cuenta? <Link to="/">Iniciar Sesión</Link></p>
+        </div>
       </form>
     </div>
   );

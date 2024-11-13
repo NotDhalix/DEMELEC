@@ -5,7 +5,7 @@ import './index.css';
 
 function BurgerMenu() {
   const [isOpen, setIsOpen] = useState(false);
-  const { logout } = useAuth();
+  const { logout, user } = useAuth(); // Assuming `user` contains the logged-in user's details
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -18,9 +18,8 @@ function BurgerMenu() {
     navigate('/');
   };
 
-  // Cierra el menú cuando la ruta cambia
   useEffect(() => {
-    setIsOpen(false);
+    setIsOpen(false); // Close the menu when the location changes
   }, [location]);
 
   return (
@@ -32,10 +31,15 @@ function BurgerMenu() {
           <span className="burger-line"></span>
         </div>
         <div className={`sidebar ${isOpen ? 'show' : ''}`}>
+          {user && user.cedula ? (
+            <p className="user-id">ID de Usuario: {user.cedula}</p> // Display the user's cedula
+          ) : (
+            <p className="user-id">ID de Usuario no disponible</p> // Fallback text if no cedula
+          )}
           <ul>
             <li><Link to="/dashboard" onClick={() => setIsOpen(false)}>Dashboard</Link></li>
             <li><Link to="/profile" onClick={() => setIsOpen(false)}>Profile</Link></li>
-            <li><Link to="/settings" onClick={() => setIsOpen(false)}>Settings</Link></li>
+            <li><Link to="/votacion" onClick={() => setIsOpen(false)}>Votacion</Link></li>
             <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
           </ul>
         </div>

@@ -7,11 +7,11 @@ import Dashboard from './Dashboard';
 import { useAuth } from './context/AuthContext';
 import BurgerMenu from './BurgerMenu';
 import UserProfile from './UserProfile';
-
+import VotacionPage from './Votacion';
 function App() {
   const { isAuthenticated } = useAuth();
 
-  // Rutas protegidas: solo se deben mostrar si el usuario está autenticado
+  // ProtectedRoute: Only accessible if authenticated
   const ProtectedRoute = ({ element }) => {
     return isAuthenticated ? element : <Navigate to="/" />;
   };
@@ -19,24 +19,25 @@ function App() {
   return (
     <Router>
       <div style={{ display: 'flex' }}>
-        {/* Mostrar el menú de navegación solo si el usuario está autenticado */}
+        {/* Display the BurgerMenu only if authenticated */}
         {isAuthenticated && (
           <div style={{ width: '250px', position: 'fixed', zIndex: 100 }}>
             <BurgerMenu />
           </div>
         )}
 
-        {/* Contenedor principal que contiene las rutas de contenido */}
+        {/* Main container containing route content */}
         <div style={{ marginLeft: isAuthenticated ? '250px' : '0', width: '100%' }}>
           <Routes>
-            {/* Rutas públicas */}
+            {/* Public Routes */}
             <Route path="/" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
 
-            {/* Ruta protegida: solo accesible si el usuario está autenticado */}
+            {/* Protected Routes */}
             <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
             <Route path="/profile" element={<ProtectedRoute element={<UserProfile />} />} />
+            <Route path="/votacion" element={<ProtectedRoute element={<VotacionPage />} />} />
           </Routes>
         </div>
       </div>

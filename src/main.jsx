@@ -1,13 +1,13 @@
 import './index.css';
 import React from 'react';
-import ReactDOM from 'react-dom/client';  // Asegúrate de importar desde 'react-dom/client'
+import ReactDOM from 'react-dom/client'; // Ensure to import from 'react-dom/client'
 import App from './App.jsx';
-import { AuthProvider } from './context/AuthContext'; // Importa el AuthProvider para envolver tu aplicación
+import { AuthProvider } from './context/AuthContext'; // Import AuthProvider to wrap your app
 
-// Crea el contenedor raíz y envuelve la aplicación con el AuthProvider
+// Create root container and wrap App with AuthProvider
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthProvider> {/* El AuthProvider envuelve la aplicación para proporcionar el contexto */}
+    <AuthProvider> {/* AuthProvider wraps the app to provide authentication context */}
       <App />
     </AuthProvider>
   </React.StrictMode>,
