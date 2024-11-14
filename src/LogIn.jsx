@@ -35,10 +35,10 @@ function LogIn() {
       const response = await login(userData); // Usamos la función login del contexto
 
       if (response.status === 200) {
-        //alert(response.message);
-
+        // Si la respuesta es exitosa, almacenamos los datos del usuario
         if (rememberMe) {
-          localStorage.setItem('user', JSON.stringify(response.user));
+          // Guardamos los datos del usuario en localStorage si 'Recuérdame' está activado
+          localStorage.setItem('user', JSON.stringify(response.user)); 
         }
         navigate('/dashboard');
       } else {
@@ -100,11 +100,9 @@ function LogIn() {
             ¿No tiene una cuenta? <Link to="/signup">Regístrese aquí</Link>
           </p>
         </div>
-        
       </form>
     </div>
   );
-  
 }
 
 export default LogIn;

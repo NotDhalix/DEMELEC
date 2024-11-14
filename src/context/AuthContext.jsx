@@ -54,6 +54,36 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginAdmin = async (userData) => {
+    try {
+      const response = await fetch('http://127.0.0.1:3001/api/loginAdmin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsAuthenticated(true);
+        setUser(data.user);
+
+        // Save state in localStorage
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('user', JSON.stringify(data.user));
+
+        return { status: 200, message: data.message, user: data.user };
+      } else {
+        return { status: response.status, error: data.error || 'Failed to login.' };
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      return { status: 500, error: 'An error occurred while trying to log in.' };
+    }
+  };
+
   // Logout logic
   const logout = () => {
     setIsAuthenticated(false);
@@ -65,7 +95,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, loginAdmin, logout }}>
       {children}
     </AuthContext.Provider>
   );
