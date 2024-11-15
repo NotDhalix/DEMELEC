@@ -10,11 +10,11 @@ function LogIn() {
   }, []);
 
   const { login } = useAuth(); // Usamos el login del contexto de autenticación
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [username, setUsername] = useState('');  // Cedula
+  const [password, setPassword] = useState('');  // Contraseña
+  const [rememberMe, setRememberMe] = useState(false);  // Recuérdame
+  const [loading, setLoading] = useState(false);  // Indicador de carga
+  const navigate = useNavigate();  // Navegación de React Router
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,7 +29,7 @@ function LogIn() {
       password: password,
     };
 
-    setLoading(true);
+    setLoading(true);  // Inicia la carga
 
     try {
       const response = await login(userData); // Usamos la función login del contexto
@@ -38,9 +38,9 @@ function LogIn() {
         // Si la respuesta es exitosa, almacenamos los datos del usuario
         if (rememberMe) {
           // Guardamos los datos del usuario en localStorage si 'Recuérdame' está activado
-          localStorage.setItem('user', JSON.stringify(response.user)); 
+          localStorage.setItem('user', JSON.stringify(response.user)); // Guardamos el objeto como JSON
         }
-        navigate('/dashboard');
+        navigate('/dashboard'); // Redirige al dashboard si el login es exitoso
       } else {
         alert(response.error || 'Hubo un problema al iniciar sesión.');
       }
@@ -48,7 +48,7 @@ function LogIn() {
       console.error('Error al iniciar sesión:', error);
       alert('Hubo un error al intentar iniciar sesión.');
     } finally {
-      setLoading(false);
+      setLoading(false); // Detiene la carga al finalizar
     }
   };
 
@@ -94,7 +94,6 @@ function LogIn() {
         <button type="submit" className="btn" disabled={loading}>
           {loading ? 'Cargando...' : 'Iniciar sesión'}
         </button>
-
         <div className="register-link">
           <p>
             ¿No tiene una cuenta? <Link to="/signup">Regístrese aquí</Link>
@@ -104,5 +103,4 @@ function LogIn() {
     </div>
   );
 }
-
 export default LogIn;

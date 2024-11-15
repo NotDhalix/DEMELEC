@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check for stored authentication status and user data on app load
+    // Verificar si hay un estado de autenticación y datos del usuario almacenados en el localStorage
     const storedAuth = localStorage.getItem('isAuthenticated');
     const storedUser = localStorage.getItem('user');
 
@@ -17,13 +17,13 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         setUser(parsedUser);
       } catch (error) {
-        console.error('Error parsing user data:', error);
-        localStorage.removeItem('user'); // Clear invalid user data
+        console.error('Error al analizar los datos del usuario:', error);
+        localStorage.removeItem('user'); // Eliminar datos de usuario inválidos
       }
     }
   }, []);
 
-  // Login logic
+  // Función de login (ahora igual que loginAdmin)
   const login = async (userData) => {
     try {
       const response = await fetch('http://127.0.0.1:3001/api/login', {
@@ -40,20 +40,21 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         setUser(data.user);
 
-        // Save state in localStorage
+        // Guardar estado en localStorage
         localStorage.setItem('isAuthenticated', 'true');
         localStorage.setItem('user', JSON.stringify(data.user));
 
         return { status: 200, message: data.message, user: data.user };
       } else {
-        return { status: response.status, error: data.error || 'Failed to login.' };
+        return { status: response.status, error: data.error || 'Error al iniciar sesión.' };
       }
     } catch (error) {
-      console.error('Login error:', error);
-      return { status: 500, error: 'An error occurred while trying to log in.' };
+      console.error('Error al intentar iniciar sesión:', error);
+      return { status: 500, error: 'Ocurrió un error al intentar iniciar sesión.' };
     }
   };
 
+  // Función de loginAdmin
   const loginAdmin = async (userData) => {
     try {
       const response = await fetch('http://127.0.0.1:3001/api/loginAdmin', {
@@ -70,26 +71,26 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         setUser(data.user);
 
-        // Save state in localStorage
+        // Guardar estado en localStorage
         localStorage.setItem('isAuthenticated', 'true');
         localStorage.setItem('user', JSON.stringify(data.user));
 
         return { status: 200, message: data.message, user: data.user };
       } else {
-        return { status: response.status, error: data.error || 'Failed to login.' };
+        return { status: response.status, error: data.error || 'Error al iniciar sesión.' };
       }
     } catch (error) {
-      console.error('Login error:', error);
-      return { status: 500, error: 'An error occurred while trying to log in.' };
+      console.error('Error al intentar iniciar sesión:', error);
+      return { status: 500, error: 'Ocurrió un error al intentar iniciar sesión.' };
     }
   };
 
-  // Logout logic
+  // Función para cerrar sesión
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
 
-    // Clear localStorage
+    // Limpiar localStorage
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('user');
   };
@@ -101,11 +102,11 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use the authentication context
+// Hook personalizado para usar el contexto de autenticación
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error('useAuth debe ser utilizado dentro de un AuthProvider');
   }
   return context;
 };
