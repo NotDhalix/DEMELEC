@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'; // Asegúrate de importar useEffect
 import BarChart from './components/BarChart';
 import PreliminarWinner from './components/PreliminarWinner';
-import BurgerMenu from './BurgerMenu';
+import BurgerMenu from './componentes/BurgerMenu';
 
 function Dashboard() {
   useEffect(() => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'boxicons';
 import { useAuth } from './context/AuthContext';
-
+import './css/index.css';
 function AdminLogIn() {
   useEffect(() => {
     document.title = 'Iniciar Sesión Admin';

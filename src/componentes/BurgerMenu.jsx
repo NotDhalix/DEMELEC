@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
-import './index.css';
+import { useAuth } from '../context/AuthContext';
+import '../css/index.css'
 
 function BurgerMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,6 +40,7 @@ function BurgerMenu() {
             <li><Link to="/dashboard" onClick={() => setIsOpen(false)}>Dashboard</Link></li>
             <li><Link to="/profile" onClick={() => setIsOpen(false)}>Profile</Link></li>
             <li><Link to="/votacion" onClick={() => setIsOpen(false)}>Votacion</Link></li>
+            <li><Link to="/candidato" onClick={() => setIsOpen(false)}>Candidatos</Link></li>
             <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
           </ul>
         </div>

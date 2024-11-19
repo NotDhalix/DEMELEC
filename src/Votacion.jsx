@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import Navbar from './componentes/Navbar';
+import BurgerMenu from './componentes/BurgerMenu';
 function VotacionPage() {
   const [candidatos, setCandidatos] = useState([]);
   const [selectedCandidato, setSelectedCandidato] = useState(null);
@@ -62,40 +63,57 @@ function VotacionPage() {
   };
 
   return (
+  <>
+    <div>
+      <BurgerMenu />
+    </div>
+
     <div className="votacion-page">
-      <h1>Votación</h1>
-      <p>Selecciona un candidato para votar:</p>
+      <div>
+        <Navbar />
+      </div>
+      <h1 className="votacion-title principal">Votación</h1>
+      <p className="votacion-instrucciones">Selecciona un candidato para votar:</p>
 
       <div className="candidatos-list">
         {loading ? (
-          <p>Cargando candidatos...</p>
+          <p className="loading-message">Cargando candidatos...</p>
         ) : (
           candidatos.length > 0 ? (
             candidatos.map((candidato) => (
-              <div key={candidato.id} className="candidato">
+              <div key={candidato.id} className="candidato-item">
                 <input
                   type="radio"
                   id={`candidato-${candidato.id}`}
                   name="candidato"
                   value={candidato.id}
                   onChange={() => setSelectedCandidato(candidato.id)}
+                  className="candidato-radio"
                 />
-                <label htmlFor={`candidato-${candidato.id}`}>
+                <label htmlFor={`candidato-${candidato.id}`} className="candidato-label">
                   {candidato.nombre} ({candidato.partido})
                 </label>
               </div>
             ))
           ) : (
-            <p>No se encontraron candidatos.</p>
+            <p className="no-candidatos-message">No se encontraron candidatos.</p>
           )
         )}
       </div>
 
-      <button onClick={handleVotar} className="votar-button" disabled={loadingVote}>
-        {loadingVote ? 'Registrando voto...' : 'Votar'}
-      </button>
+      <div className="votar-button-container">
+        <button
+          onClick={handleVotar}
+          className="votar-button"
+          disabled={loadingVote}
+        >
+          {loadingVote ? 'Registrando voto...' : 'Votar'}
+        </button>
+      </div>
     </div>
-  );
+  </>
+);
+
 }
 
 export default VotacionPage;
