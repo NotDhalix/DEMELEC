@@ -10,9 +10,7 @@ import BurgerMenu from './componentes/BurgerMenu';
 import UserProfile from './UserProfile';
 import VotacionPage from './Votacion';
 import AdminLogIn from './AdminLogIn';
-import DataTable from './Datos';
 import Navbar from './componentes/Navbar';
-import TableWithPagination from './Datos';
 import Candidato from './candidatos';
 function App() {
   const { isAuthenticated } = useAuth();

@@ -23,6 +23,27 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+
+  const fetchCandidatos = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:3001/api/candidatos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setCandidatos(data); // Guardamos los datos en el estado global
+    } catch (error) {
+      console.error('Error al obtener candidatos:', error);
+    }
+  };
+
   // Función de login (ahora igual que loginAdmin)
   const login = async (userData) => {
     try {
@@ -96,7 +117,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, loginAdmin, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, loginAdmin, logout, fetchCandidatos }}>
       {children}
     </AuthContext.Provider>
   );

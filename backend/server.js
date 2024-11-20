@@ -129,6 +129,21 @@ app.put('/api/users/:cedula', async (req, res) => {
   }
 });
 
+app.use(cors());
+app.use(express.json());
+
+app.post('/api/candidatos', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute('SELECT * FROM candidatos');
+    await connection.end();
+    res.status(200).json(rows); // Respuesta exitosa con datos
+  } catch (error) {
+    console.error('Error al obtener candidatos:', error);
+    res.status(500).json({ error: 'Error al obtener los candidatos' }); // Respuesta en caso de error
+  }
+});
+
 // Iniciar el servidor
 app.listen(3001, () => {
   console.log('Servidor escuchando en el puerto 3001');
