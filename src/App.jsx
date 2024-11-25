@@ -12,6 +12,8 @@ import AdminLogIn from './AdminLogIn';
 import Navbar from './componentes/Navbar';
 import Candidato from './candidatos';
 import PartidosPoliticos from './Partidospoliticos';
+import BurgerMenu from './componentes/BurgerMenu';
+import BMenu from './componentes/BMenu';
 function App() {
   const { isAuthenticated } = useAuth();
 

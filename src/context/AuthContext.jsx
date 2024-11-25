@@ -170,23 +170,34 @@ const votarCandidato = async (idCandidato) => {
   }
 };
 const [usuario, setUsuario] = useState(null);
-const verificarVotacion = async () => {
-    if (!usuario || !usuario.id) {
-      throw new Error('Usuario no autenticado');
+const verificarVotacion = async (cedula) => {
+  if (!cedula) {
+    throw new Error('Cédula no proporcionada');
+  }
+
+  try {
+    const response = await fetch(`http://127.0.0.1:3001/api/votantes/${cedula}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        // Otros encabezados si es necesario
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('No se pudo obtener la información de votación.');
     }
 
-    try {
-      // Aquí hacemos la solicitud a la API para verificar si el usuario ya votó
-      const response = await axios.get(`http://127.0.0.1:3001/api/votantes/${usuario.id}`);
-      if (response.data && response.data.votacion_realizada) {
-        return true; // El usuario ya votó
-      }
-      return false; // El usuario no ha votado
-    } catch (error) {
-      console.error('Error al verificar votación:', error);
-      throw new Error('Error al verificar votación');
-    }
-  };
+    const data = await response.json();
+    console.log('Respuesta de votación:', data);
+
+    return data.votacion_realizada;
+  } catch (error) {
+    console.error('Error al verificar votación:', error);
+    throw new Error('Error al verificar votación');
+  }
+};
+
 
   const fetchAdminData = async (cedula) => {
   try {
@@ -201,6 +212,23 @@ const verificarVotacion = async () => {
     }
   } catch (error) {
     console.error('Error al obtener los datos del administrador:', error);
+  }
+};
+const registrarVotacion = async (cedula) => {
+  if (!cedula) {
+    throw new Error('Usuario no autenticado: falta la cédula');
+  }
+
+  try {
+    // Solicita a la API registrar la votación usando la cédula como parte de la URL
+    const response = await axios.post(`http://127.0.0.1:3001/api/registrarVotacion/${cedula}`);
+    if (response.data && response.data.success) {
+      return true; // Votación registrada correctamente
+    }
+    return false; // No se pudo registrar el voto
+  } catch (error) {
+    console.error('Error al registrar votación:', error);
+    throw new Error('Error al registrar votación');
   }
 };
 
@@ -230,6 +258,7 @@ const verificarVotacion = async () => {
         votarCandidato,
         verificarVotacion,
         fetchAdminData,
+        registrarVotacion,
       }}
     >
       {children}

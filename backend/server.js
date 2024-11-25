@@ -144,6 +144,27 @@ app.put('/api/users/:cedula', async (req, res) => {
     res.status(500).send({ error: 'Error al actualizar usuario' });
   }
 });
+app.get('/api/votantes/:cedula', (req, res) => {
+  const { cedula } = req.params; // Recibimos la cédula en lugar del id
+  console.log(cedula);
+  
+  const query = 'SELECT votacion_realizada FROM votante WHERE cedula_v = ?'; // Usamos 'cedula' en la consulta SQL
+
+  db.query(query, [cedula], (error, results) => {
+    if (error) {
+      console.error('Error al consultar la base de datos:', error);
+      return res.status(500).json({ error: 'Error al consultar la base de datos' });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    const haVotado = results[0].votacion_realizada;
+
+    res.json({ votacion_realizada: haVotado === 1 });
+  });
+});
 
 app.get('/api/partidopolitico', async (req, res) => {
   try {
@@ -231,7 +252,23 @@ app.post('/api/votar/:idCandidato', (req, res) => {
     }
   });
 });
+app.post('/api/registrarVotacion/:cedula', (req, res) => {
+  const { cedula } = req.params;
+  const query = 'UPDATE votante SET votacion_realizada = 1 WHERE cedula_v = ?';
 
+  db.query(query, [cedula], (error, results) => {
+    if (error) {
+      console.error('Error al actualizar la votación:', error);
+      return res.status(500).json({ error: 'Error al actualizar la votación' });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado o ya votó' });
+    }
+
+    res.json({ success: true, message: 'Votación registrada correctamente' });
+  });
+});
 
 // Iniciar el servidor
 app.listen(3001, () => {
