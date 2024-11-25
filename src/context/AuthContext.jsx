@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-
+import axios from 'axios';
 // Crear el contexto
 const AuthContext = createContext();
 
@@ -151,20 +151,40 @@ export const AuthProvider = ({ children }) => {
   };
   
   // Función para votar por un candidato
-  const votarCandidato = async (idCandidato) => {
+const votarCandidato = async (idCandidato) => {
+  try {
+    const response = await fetch(`http://127.0.0.1:3001/api/votar/${idCandidato}`, {
+      method: 'POST',
+      body: JSON.stringify({ candidatoId: idCandidato }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (!response.ok) {
+      throw new Error('No se pudo registrar el voto');
+    }
+
+    console.log('Respuesta exitosa:', response);
+    alert('Voto registrado con éxito');
+  } catch (error) {
+    console.error('Error al registrar el voto:', error);
+  }
+};
+const [usuario, setUsuario] = useState(null);
+const verificarVotacion = async () => {
+    if (!usuario || !usuario.id) {
+      throw new Error('Usuario no autenticado');
+    }
+
     try {
-      const response = await fetch(`http://127.0.0.1:3001/api/votar/${idCandidato}`, {
-        method: 'POST',
-        body: JSON.stringify({ candidatoId: idCandidato }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-      if (!response.ok) {
-        throw new Error('No se pudo registrar el voto');
+      // Aquí hacemos la solicitud a la API para verificar si el usuario ya votó
+      const response = await axios.get(`http://127.0.0.1:3001/api/votantes/${usuario.id}`);
+      if (response.data && response.data.votacion_realizada) {
+        return true; // El usuario ya votó
       }
-      alert('Voto registrado con éxito');
+      return false; // El usuario no ha votado
     } catch (error) {
-      console.error('Error al registrar el voto:', error);
-      alert('Ocurrió un error al registrar el voto');
+      console.error('Error al verificar votación:', error);
+      throw new Error('Error al verificar votación');
     }
   };
 
@@ -198,6 +218,7 @@ export const AuthProvider = ({ children }) => {
         user,
         candidatos,
         votos,
+        setUsuario,
         partidoPoliticos,
         login,
         loginAdmin,
@@ -207,6 +228,7 @@ export const AuthProvider = ({ children }) => {
         fetchVotantes,
         fetchVotos,
         votarCandidato,
+        verificarVotacion,
         fetchAdminData,
       }}
     >

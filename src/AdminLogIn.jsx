@@ -93,11 +93,7 @@ function AdminLogIn() {
           {loading ? 'Cargando...' : 'Iniciar sesión'}
         </button>
 
-        <div className="register-link">
-          <p>
-            ¿No tiene una cuenta? <Link to="/signup">Regístrese aquí</Link>
-          </p>
-        </div>
+        
       </form>
     </div>
     </div>

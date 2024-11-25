@@ -206,15 +206,16 @@ app.get('/api/votos', async (req, res) => {
 
 // Endpoint para registrar un voto
 app.post('/api/votar/:idCandidato', (req, res) => {
-  const candidatoId = req.params.idCandidato;
-
-  // Validar que el ID del candidato es un número
+  const candidatoId = parseInt(req.params.idCandidato, 10); // Convertir ID a entero
+  // Validar que el ID del candidato sea un número válido
   if (!candidatoId || isNaN(candidatoId)) {
     return res.status(400).json({ error: 'ID de candidato inválido' });
   }
-
-  // Incrementar el contador de votos para el candidato en la base de datos
-  const query = 'UPDATE votos SET cantidad_votos = cantidad_votos + 1 WHERE id = ?';
+  // Incrementar el contador de votos para el candidato especificado
+  const query = `
+    UPDATE votos 
+    SET cantidad_votos = cantidad_votos + 1 
+    WHERE id_candidato = ?`;
 
   db.query(query, [candidatoId], (err, result) => {
     if (err) {
@@ -222,6 +223,7 @@ app.post('/api/votar/:idCandidato', (req, res) => {
       return res.status(500).json({ error: 'Error al registrar el voto' });
     }
 
+    // Verificar si la actualización afectó alguna fila
     if (result.affectedRows > 0) {
       return res.status(200).json({ message: 'Voto registrado con éxito' });
     } else {
@@ -229,6 +231,7 @@ app.post('/api/votar/:idCandidato', (req, res) => {
     }
   });
 });
+
 
 // Iniciar el servidor
 app.listen(3001, () => {

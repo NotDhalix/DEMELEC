@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from './context/AuthContext'; // Importa el contexto
 import Navbar from './componentes/Navbar';
-import BurgerMenu from './componentes/BurgerMenu';
 import VotacionModal from './componentes/VotacionModal'; // Importa el VotacionModal
 import PropTypes from 'prop-types';
 
@@ -34,16 +33,22 @@ function Votacion() {
 
   // Función para manejar la votación
   const handleVotacion = (candidato) => {
-    setCandidatoSeleccionado(candidato); // Establece el candidato seleccionado
-    setConfirmacionAbierta(true); // Abre el modal de confirmación
+    console.log('Candidato seleccionado:', candidato);  // Verifica que el candidato tenga id_candidato
+    setCandidatoSeleccionado(candidato);
+    setConfirmacionAbierta(true);
   };
 
   // Función para confirmar la votación y actualizar la base de datos
   const confirmarVotacion = async () => {
+    if (!candidatoSeleccionado || !candidatoSeleccionado.id_candidato) {
+      setError('Candidato no seleccionado o inválido.');
+      console.log('Candidato no válido:', candidatoSeleccionado);
+      return;
+    }
     try {
-      await votarCandidato(candidatoSeleccionado.id); // Llama a la función para votar
-      setConfirmacionAbierta(false); // Cierra el modal
-      setCandidatoSeleccionado(null); // Limpia la selección
+      await votarCandidato(candidatoSeleccionado.id_candidato); // Usa id_candidato en lugar de id
+      setConfirmacionAbierta(false);
+      setCandidatoSeleccionado(null);
       alert('Voto registrado con éxito');
     } catch (error) {
       setError('Error al registrar el voto. Inténtalo nuevamente.');
@@ -52,10 +57,7 @@ function Votacion() {
   };
 
   return (
-    <div className="principal">
-      <div>
-        <BurgerMenu />
-      </div>
+    <div className="principal centrear">
       <div className="contenido">
         <div className="na">
           <Navbar />
@@ -71,9 +73,9 @@ function Votacion() {
         {confirmacionAbierta && candidatoSeleccionado && (
           <VotacionModal
             isOpen={confirmacionAbierta}
-            onClose={() => setConfirmacionAbierta(false)} // Cierra el modal
-            candidato={candidatoSeleccionado} // Pasa el candidato seleccionado al modal
-            onConfirmar={confirmarVotacion} // Llama a la función de confirmación
+            onClose={() => setConfirmacionAbierta(false)}
+            candidato={candidatoSeleccionado}
+            onConfirmar={confirmarVotacion}
           />
         )}
       </div>
@@ -87,8 +89,8 @@ Votacion.propTypes = {
   agregarCandidato: PropTypes.func,
   actualizarCandidato: PropTypes.func,
   fetchPartidopolitico: PropTypes.func,
-  Nombre_pp: PropTypes.func, // Función requerida
-  votarCandidato: PropTypes.func, // Función para votar
+  Nombre_pp: PropTypes.func,
+  votarCandidato: PropTypes.func,
 };
 
 const CandidatosCards = ({ candidatos, onVotar }) => {
@@ -106,7 +108,7 @@ const CandidatosCards = ({ candidatos, onVotar }) => {
         <div className="card" key={index}>
           <img
             src={candidato.imagen || 'https://via.placeholder.com/150'}
-            alt={`Imagen de ${candidato.nombre_c}`} // Corregido
+            alt={`Imagen de ${candidato.nombre_c}`}
             className="card-image"
           />
           <div className="card-content">
@@ -132,7 +134,6 @@ const CandidatosCards = ({ candidatos, onVotar }) => {
 CandidatosCards.propTypes = {
   candidatos: PropTypes.array,
   onVotar: PropTypes.func,
-  partidos: PropTypes.object, // Objeto de partidos requerido
 };
 
 export default Votacion;

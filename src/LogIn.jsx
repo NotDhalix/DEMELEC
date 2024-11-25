@@ -10,9 +10,6 @@ function LogIn() {
     
   }, []);
 
-
-  
-
   const { login } = useAuth(); // Usamos el login del contexto de autenticación
   const [username, setUsername] = useState('');  // Cedula
   const [password, setPassword] = useState('');  // Contraseña
@@ -43,7 +40,7 @@ function LogIn() {
           // Guardamos los datos del usuario en localStorage si 'Recuérdame' está activado
           localStorage.setItem('user', JSON.stringify(response.user)); // Guardamos el objeto como JSON
         }
-        navigate('/dashboard'); // Redirige al dashboard si el login es exitoso
+        navigate('/votacion'); // Redirige al dashboard si el login es exitoso
       } else {
         alert(response.error || 'Hubo un problema al iniciar sesión.');
       }
@@ -56,7 +53,8 @@ function LogIn() {
   };
 
   return (
-    <div className="wrapper">
+    <div className="centrear">
+      <div className="wrapper">
       <form onSubmit={handleSubmit}>
         <h1>Iniciar Sesión</h1>
 
@@ -103,6 +101,7 @@ function LogIn() {
           </p>
         </div>
       </form>
+    </div>
     </div>
   );
 }

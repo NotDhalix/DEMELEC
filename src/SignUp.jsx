@@ -58,7 +58,7 @@ function SignUp() {
       // Verificar la respuesta del servidor
       if (response.status === 201) {
         alert(data.message); // Mensaje de éxito
-        navigate('/'); // Redirigir a la página de login
+        navigate('/login'); // Redirigir a la página de login
       } else {
         alert(data.error); // Mostrar error
       }
@@ -69,7 +69,8 @@ function SignUp() {
   };
 
   return (
-    <div className="wrapper">
+    <div className="centrear">
+      <div className="wrapper ">
       <form onSubmit={handleSubmit}>
         <h1>Registrarse</h1>
 
@@ -170,6 +171,7 @@ function SignUp() {
           <p>¿Ya tiene una cuenta? <Link to="/">Iniciar Sesión</Link></p>
         </div>
       </form>
+    </div>
     </div>
   );
 }
