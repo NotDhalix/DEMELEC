@@ -50,7 +50,8 @@ function AdminLogIn() {
   };
 
   return (
-    <div className="wrapper">
+    <div className="centrear">
+      <div className="wrapper centrear">
       <form onSubmit={handleSubmit}>
         <h1>Iniciar Sesión Admin</h1>
 
@@ -99,6 +100,8 @@ function AdminLogIn() {
         </div>
       </form>
     </div>
+    </div>
+    
   );
 }
 

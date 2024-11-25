@@ -7,7 +7,11 @@ import { useAuth } from './context/AuthContext'; // Importa el hook de autentica
 function LogIn() {
   useEffect(() => {
     document.title = 'Iniciar Sesión';
+    
   }, []);
+
+
+  
 
   const { login } = useAuth(); // Usamos el login del contexto de autenticación
   const [username, setUsername] = useState('');  // Cedula
@@ -18,7 +22,6 @@ function LogIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!username || !password) {
       alert('Por favor ingrese su cédula y contraseña.');
       return;

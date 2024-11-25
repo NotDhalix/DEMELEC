@@ -6,17 +6,19 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
-
-body {
+.centrear{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;  
+    margin-top: 50px;
+}
+body {
+    min-height: 100%;  
+    width: 100%;
     background: url(https://www.murfreesborotn.gov/ImageRepository/Document?documentID=14095) no-repeat;
     background-size: cover;
     background-position: center;
-    overflow-x: hidden; 
-    position: relative; 
+    overflow-x: hidden;
 }
 
 body::before {
@@ -144,10 +146,6 @@ body::before {
     body::before {
         background: rgba(0, 0, 0, 0.7);
     }
-
-    body {
-        background-size: 150vh;
-    }
 }
 
 .preliminar-winner-pic {
@@ -158,54 +156,95 @@ body::before {
     max-width: 100px;
     /* Limita el ancho máximo a 500px */
 }
-
+.candidatos_contenido{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px;
+    margin-top: 20px;
+    background-color:#d2cece ;
+}
+.contenido{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 0 20px;
+}
 /*Burger Menu */
-/* Estructura general del menú */
-.burger-menu {
-    position: relative;
+.principal {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: margin-left 0.3s ease;
+    margin-top: 5px;
+    flex-wrap: wrap;
+    /* Permite que los elementos se ajusten en filas si es necesario */
+}
+.na{
+    margin-top: 10px;
+    margin-bottom: 30px;
 }
 
-/* Icono del menú hamburguesa */
+/* Contenedor del menú burger */
+.burger-contenedor{
+    display: block;
+    margin-right: 20px;
+}
+.burger-menu {
+    z-index: 101;
+    /* Asegúrate de que esté por encima del contenido */
+}
+
+/* Estilos para el ícono del menú */
 .burger-icon {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height: 30px;
     width: 30px;
+    height: 30px;
     cursor: pointer;
-}
+    margin-left: 20px;
 
+}
 .burger-line {
     width: 30px;
     height: 4px;
-    background-color: #fff;
-    border-radius: 5px;
+    background-color: #d3d1d1;
+    border-radius: 10px;
 }
 
-/* Barra lateral */
+/* Estilos para el menú lateral (oculto por defecto) */
 .sidebar {
+    display: none;
     position: fixed;
-    top: 0;
     left: -250px;
-    /* Comienza fuera de la pantalla */
-    height: 100%;
+    /* El menú comienza fuera de la vista */
     width: 250px;
+    height: 100%;
     background-color: #333;
     color: white;
-    transition: left 0.3s ease-in-out;
+    transition: left 0.3s ease;
+    /* Animación para mover el menú lateral */
     padding-top: 60px;
-    z-index: 500;
+    /* Espacio para la barra de navegación */
+    z-index: 100;
+    /* Asegúrate de que esté detrás del ícono de menú */
 }
 
+/* El menú lateral cuando está abierto */
 .sidebar.show {
+    position: relative;
+    display: block;
     left: 0;
-    /* Cuando está abierto, se mueve hacia la izquierda */
+    height: 550px;
+    /* Desplaza el menú lateral a la vista */
 }
 
+/* Estilos para los enlaces dentro del menú lateral */
 .sidebar ul {
     list-style-type: none;
     padding: 0;
@@ -213,7 +252,6 @@ body::before {
 
 .sidebar ul li {
     padding: 15px;
-    text-align: center;
 }
 
 .sidebar ul li a {
@@ -222,67 +260,38 @@ body::before {
     display: block;
 }
 
-/* Estilo cuando el menú está abierto */
-.burger-menu.open .burger-icon .burger-line {
-    background-color: transparent;
-    /* Cambiar las líneas cuando el menú esté abierto */
+.sidebar ul li a:hover {
+    background-color: #575757;
 }
 
-.burger-menu.open .burger-icon .burger-line::before,
-.burger-menu.open .burger-icon .burger-line::after {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 4px;
-    background-color: white;
-    left: 0;
-    transition: all 0.3s ease;
+/* Estilo para el contenido cuando el menú está abierto */
+.content {
+    flex: 1;
+    transition: margin-left 0.3s ease;
+    /* Suaviza el desplazamiento del contenido */
+    padding: 20px;
 }
 
-/* Ajustes responsivos: asegura que el menú hamburguesa solo sea visible en pantallas más pequeñas */
-@media (max-width: 768px) {
-    .sidebar {
-        left: -250px;
-        /* Inicia oculto */
-    }
-
-    .sidebar.show {
-        left: 0;
-    }
-}
-
-.principal {
-    justify-content: center;
-    /* Centra horizontalmente */
-    align-items: center;
-    /* Centra verticalmente */
-    min-height: 100vh;
-    /* Sombra para mejor visibilidad */
-    border-radius: 10px;
-    /* Bordes redondeados */
-    width: 800px;
-    /* Ancho máximo */
-    margin: auto;
-    /* Centramos en la pantalla */
+.burger-principal.menu-open .content {
+    margin-left: 250px;
+    /* Mueve el contenido cuando el menú se abre */
 }
 
 /* Perfil */
 
 .profile-container{
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     /* Centra horizontalmente */
     align-items: center;
-    /* Ocupa toda la altura de la ventana */
     background-color: rgba(255, 255, 255, 0.959);
     /* Fondo blanco con transparencia */
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     /* Sombra para mejor visibilidad */
     border-radius: 10px;
-    /* Ancho máximo */
-    margin: auto;
-    /* Centramos en la pantalla */
 }
 
 .profile-info {
@@ -358,12 +367,16 @@ button:hover {
 
 /*NAVBAR*/
 .navbar {
+    width: 1150px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
     background-color: #282c34;
-    color: white;
+}
+@media only screen and (max-width: 608px) {
+    .navbar {
+        width: 100%;
+    }
 }
 
 .navbar-logo {
@@ -406,11 +419,6 @@ button:hover {
 
 /**/
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
-
 .nav {
     background-color: #f8f9fa;
     padding: 10px;
@@ -418,11 +426,6 @@ body {
 
 .lateral {
     flex: 1;
-    padding: 10px;
-}
-
-.principal {
-    flex: 3;
     padding: 10px;
 }
 
@@ -468,15 +471,6 @@ body {
 @media screen and (max-width: 768px) {
     div {
         flex-direction: column;
-    }
-
-    .lateral {
-        order: 1;
-        margin-bottom: 10px;
-    }
-
-    .principal {
-        order: 2;
     }
 
     .tabla-candidatos th,
@@ -527,4 +521,89 @@ body {
 .modal-buttons button:last-child {
     background: #007bff;
     color: white;
+}
+
+/*Cards*/
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 250px;
+    text-align: center;
+    padding: 15px;
+}
+
+.card-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.card-content {
+    padding: 10px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.card-position,
+.card-partido,
+.card-cedula {
+    font-size: 14px;
+    color: #666;
+}
+
+.card button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.card button:hover {
+    background-color: #0056b3;
+}
+
+.btn-agregar {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-agregar:hover {
+    background-color: #218838;
+}
+
+.btn-editar {
+    padding: 6px 10px;
+    background-color: #ffc107;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-editar:hover {
+    background-color: #e0a800;
 }

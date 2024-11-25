@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import '../css/index.css'
+import '../css/index.css';
 
 function BurgerMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,27 +23,27 @@ function BurgerMenu() {
   }, [location]);
 
   return (
-    <div className="burger-container">
-      <div className={`burger-menu ${isOpen ? 'open' : ''}`}>
+    <div className={`burger-contenedor burger-principal ${isOpen ? 'menu-open' : ''}`}>
+      <div className="burger-menu">
         <div className="burger-icon" onClick={toggleMenu}>
           <span className="burger-line"></span>
           <span className="burger-line"></span>
           <span className="burger-line"></span>
         </div>
-        <div className={`sidebar ${isOpen ? 'show' : ''}`}>
-          {user && user.cedula ? (
-            <p className="user-id">ID de Usuario: {user.cedula}</p> // Display the user's cedula
-          ) : (
-            <p className="user-id">ID de Usuario no disponible</p> // Fallback text if no cedula
-          )}
-          <ul>
-            <li><Link to="/dashboard" onClick={() => setIsOpen(false)}>Dashboard</Link></li>
-            <li><Link to="/profile" onClick={() => setIsOpen(false)}>Profile</Link></li>
-            <li><Link to="/votacion" onClick={() => setIsOpen(false)}>Votacion</Link></li>
-            <li><Link to="/candidato" onClick={() => setIsOpen(false)}>Candidatos</Link></li>
-            <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
-          </ul>
-        </div>
+      </div>
+      <div className={`sidebar ${isOpen ? 'show' : ''}`}>
+        {user && user.cedula ? (
+          <p className="user-id">ID de Usuario: {user.cedula}</p>
+        ) : (
+          <p className="user-id">ID de Usuario no disponible</p>
+        )}
+        <ul>
+          <li><Link to="/dashboard" onClick={() => setIsOpen(false)}>Dashboard</Link></li>
+          <li><Link to="/profile" onClick={() => setIsOpen(false)}>Profile</Link></li>
+          <li><Link to="/votacion" onClick={() => setIsOpen(false)}>Votacion</Link></li>
+          <li><Link to="/candidato" onClick={() => setIsOpen(false)}>Candidatos</Link></li>
+          <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
+        </ul>
       </div>
     </div>
   );

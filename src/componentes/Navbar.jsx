@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/index.css'
-
+import logo from '../assets/Logo.jpg';
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <img src="/logo.png" alt="Logo" className="logo" /> {/* Reemplaza con tu ruta al logo */}
+        <img src={logo} alt="Logo" className="logo" />
       </div>
       <form className="navbar-search" onSubmit={handleSearch}>
         <input
