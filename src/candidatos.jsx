@@ -71,7 +71,14 @@ const CandidatosTable = ({ candidatos }) => {
           <th>Nombre</th>
           <th>Cédula</th>
           <th>Partido</th>
-          <th>Acciones</th> {/* Nueva columna para las acciones */}
+          <th>
+            <button
+                onClick={() => handleEdit()}
+                className="edit-button"
+              >
+                Agregar
+              </button>
+          </th> {/* Nueva columna para las acciones */}
         </tr>
       </thead>
       <tbody>

@@ -15,7 +15,7 @@ function BMenu() {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate('/login');
   };
 
   useEffect(() => {

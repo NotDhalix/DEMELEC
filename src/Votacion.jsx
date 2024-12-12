@@ -56,10 +56,8 @@ function Votacion() {
       if (yaVoto && yaVoto.votacion_realizada) {
         alert('Ya has votado. No puedes votar nuevamente.');
       } else {
-        
         setCandidatoSeleccionado(candidato);
         setConfirmacionAbierta(true); // Abre el modal de confirmación
-        alert('N has votado. No puedes votar nuevamente.');
       }
   };
 
